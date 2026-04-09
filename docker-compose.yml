@@ -1,0 +1,6 @@
+services:
+  web:
+    build: .
+    container_name: flask-compose-app
+    ports:
+      - "5000:5000"
