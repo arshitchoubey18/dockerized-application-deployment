@@ -119,9 +119,6 @@ Then access:
 
 http://localhost:8080
 
-📸 Output
-
-Add screenshots here (optional)
 ```
 📚 Learning Outcomes
 ```
