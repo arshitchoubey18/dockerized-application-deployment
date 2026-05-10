@@ -13,7 +13,8 @@ docker run -d -p 5000:5000 arshitchoubey18/dockerized-flask-app:v1
 ```
 
 ## What This Project Proves
-I built this to answer a common interview question: "How do you ship a Python app consistently from laptop to cloud?"
+
+I built this to answer a common question: "How do you ship a Python app consistently from laptop to cloud?"
 
 Key outcomes:
 
@@ -99,7 +100,11 @@ HEALTHCHECK CMD curl -f http://localhost:5000/health || exit 1
 CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "app:app"]
 ```
 
-**Why this matters in interviews:** I can explain layer ordering, non-root users, and healthchecks.
+**Design Rationale:**
+- Layer ordering: requirements.txt first enables Docker layer caching
+- Non-root user (1001): security best practice for containers
+- Healthchecks: enables orchestration platforms to monitor container state
+- Gunicorn: production-grade WSGI server with worker processes
 
 ## What I Learned
 
@@ -114,22 +119,6 @@ CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "app:app"]
 - [ ] Multi-stage build to drop final image below 80MB
 - [ ] Deploy to AWS ECS Fargate with Application Load Balancer
 - [ ] Add Prometheus metrics endpoint
-
-## How to Present This in an Interview (30-second pitch)
-
-Practice this flow:
-
-1. **Context:** "I built this to understand how to ship Python apps without 'it works on my machine' issues."
-2. **Problem:** "Flask apps break across environments because of dependency drift and port binding."
-3. **Solution:** "I containerized it with a slim Python base, added a healthcheck, and used Compose for one-command startup."
-4. **Impact:** "Build time dropped with layer caching, and the image runs identically on my Mac, an EC2 instance, and in CI."
-5. **Next:** "I'm extending it with GitHub Actions and ECS deployment."
-
-**If they dig deeper, be ready to explain:**
-- Why `0.0.0.0` not `localhost`
-- What `.dockerignore` does
-- Difference between `docker run` and Compose
-- How you'd handle secrets in production
 
 ## Author
 
